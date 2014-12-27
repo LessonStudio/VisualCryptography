@@ -30,14 +30,24 @@
 #The reason I built this is that I found many tools out there for doing this that didn't work for a
 # variety of reasons including being built for long dead versions of Python or PIL.
 
+# USAGE: python visual_cryptography.py file_to_encrypt.png
+
 from PIL import Image, ImageDraw
 import os, sys
-import random
+from random import SystemRandom
+random = SystemRandom()
+#If you want to use the more powerful PyCrypto (pip install pycrypto) then uncomment the next line and comment out the previous two lines
+#from Crypto.Random import random
 
 if len(sys.argv)!=2:
 	print "This takes one argument; the image to be split."
 	exit()
 infile=str(sys.argv[1])
+
+if not os.path.isfile(infile):
+	print "That file does not exist."
+	exit()
+
 img = Image.open(infile)
 
 f, e = os.path.splitext(infile)
